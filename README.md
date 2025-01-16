@@ -1,22 +1,17 @@
-# MAXSwerve Java Template v2025.1
-
-See [the online changelog](https://github.com/REVrobotics/MAXSwerve-Java-Template/blob/main/CHANGELOG.md) for information about updates to the template that may have been released since you created your project.
-
+# Pipets 2025 Leadership
 ## Description
 
-A template project for an FRC swerve drivetrain that uses REV MAXSwerve Modules.
+This is the leadership version of the code for the FRC 2025 robot of Team 5933: JudgeMent Call Robotics.
+The team's code can be found at the [Pipets2025 repository](https://github.com/jmchs-robotics/Pipets2025).
+This code is also based off of the REVrobotics [MAXSwerve Java Template](https://github.com/REVrobotics/MAXSwerve-Java-Template).
 
-Note that this is meant to be used with a drivetrain composed of four MAXSwerve Modules, each configured with two SPARKS MAX, a NEO as the driving motor, a NEO 550 as the turning motor, and a REV Through Bore Encoder as the absolute turning encoder.
+## The meaning of Pipets
 
-To get started, make sure you have calibrated the zero offsets for the absolute encoders in the Hardware Client using the `Absolute Encoder` tab under the associated turning SPARK MAX devices.
+Pipets is an acronym of JudgeMent Call Robotics' goals.
 
-## Prerequisites
-
-* SPARK MAX Firmware v25.0.0
-* REVLib v2025.0.0
-
-## Configuration
-
-It is possible that this project will not work for your robot right out of the box. Various things like the CAN IDs, PIDF gains, chassis configuration, etc. must be determined for your own robot!
-
-These values can be adjusted in the `Configs.java` and `Constants.java` files.
+P - Precision
+I - Inclusion
+P - Proving concepts
+E - Efficency
+T - Teamwork
+S - Safety
