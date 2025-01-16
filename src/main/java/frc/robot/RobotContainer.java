@@ -18,8 +18,11 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.RobotToCamTransforms;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.vision.BulldogPhotonCamera;
+import frc.robot.subsystems.vision.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -35,7 +38,13 @@ import java.util.List;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final VisionSubsystem m_vision = new VisionSubsystem(
+    new BulldogPhotonCamera[] {
+      new BulldogPhotonCamera("", RobotToCamTransforms.PHOTON_CAM_POSE)
+    }
+  );
+
+  private final DriveSubsystem m_robotDrive = new DriveSubsystem(m_vision);
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
