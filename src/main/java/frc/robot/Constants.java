@@ -105,8 +105,8 @@ public final class Constants {
 
   public static final class RobotToCamTransforms {
     public static final Transform3d PHOTON_CAM_POSE = new Transform3d(
-      new Translation3d(), 
-      new Rotation3d()
+      new Translation3d(0, Units.inchesToMeters(15), Units.inchesToMeters(7)), 
+      new Rotation3d(0, 0, Units.degreesToRadians(90))
     );
   }
 }

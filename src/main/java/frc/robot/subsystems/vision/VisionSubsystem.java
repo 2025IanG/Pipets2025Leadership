@@ -6,18 +6,18 @@ import java.util.List;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.RobotToCamTransforms;
 
 public class VisionSubsystem extends SubsystemBase {
 
-    // TODO: Need to get camera name from the PhotonVision dashboard
-    BulldogPhotonCamera[] cameras;
+    BulldogPhotonCamera[] cameras = {
+        new BulldogPhotonCamera("BulldogCam1", RobotToCamTransforms.PHOTON_CAM_POSE)
+    };
 
     List<Pose2d> camPoses = new ArrayList<Pose2d>();
     List<Double> camTimestamps = new ArrayList<Double>();
 
-    public VisionSubsystem(BulldogPhotonCamera[] cameras) {
-        this.cameras = cameras;
-    }
+    public VisionSubsystem() {}
 
     @Override
     public void periodic() {

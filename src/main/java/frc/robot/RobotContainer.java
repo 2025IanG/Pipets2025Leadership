@@ -38,12 +38,7 @@ import java.util.List;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final VisionSubsystem m_vision = new VisionSubsystem(
-    new BulldogPhotonCamera[] {
-      new BulldogPhotonCamera("", RobotToCamTransforms.PHOTON_CAM_POSE)
-    }
-  );
-
+  private final VisionSubsystem m_vision = new VisionSubsystem();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem(m_vision);
 
   // The driver's controller
