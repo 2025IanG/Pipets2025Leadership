@@ -12,8 +12,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     private final AddressableLED m_led;
     private final AddressableLEDBuffer m_ledBuffer;
-    private LEDPattern m_pattern = LEDPattern.rainbow(255, 128)
-        .scrollAtAbsoluteSpeed(MetersPerSecond.of(1), Meters.of(1 / 60.0));
+    private LEDPattern m_pattern;
 
     public LEDSubsystem() {
 
@@ -26,14 +25,8 @@ public class LEDSubsystem extends SubsystemBase {
 
     }
 
-    @Override
-    public void periodic() {
-
-        m_pattern.applyTo(m_ledBuffer);
-        m_led.setData(m_ledBuffer);
-
+    public void setLEDPattern(LEDPattern pattern) {
+        pattern.applyTo(m_ledBuffer);
     }
-
-        
     
 }

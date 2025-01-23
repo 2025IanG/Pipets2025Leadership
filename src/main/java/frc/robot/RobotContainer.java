@@ -20,7 +20,9 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.RobotToCamTransforms;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.DefaultLEDSCommand;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.leds.LEDSubsystem;
 import frc.robot.subsystems.vision.BulldogPhotonCamera;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,6 +42,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final VisionSubsystem m_vision = new VisionSubsystem();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem(m_vision);
+  private final LEDSubsystem m_leds = new LEDSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -55,6 +58,7 @@ public class RobotContainer {
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DefaultDriveCommand(m_robotDrive, m_driverController));
+    m_leds.setDefaultCommand(new DefaultLEDSCommand(m_leds));
   }
 
   /**
