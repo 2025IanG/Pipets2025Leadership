@@ -145,7 +145,7 @@ public class RobotContainer {
     );
 
     driveB.whileTrue(
-      new AlgaeExtake(m_algaeWheelsSubsystem)
+      AlgaeCommands.ExtakeAlgae(m_algaeWheelsSubsystem)
     );
 
     driveX.onTrue(
@@ -157,8 +157,8 @@ public class RobotContainer {
 
     driveY.onTrue(
       new SequentialCommandGroup(
-        new SetAlgaeFlipper(m_algaeFlipperSubsystem, "down"),
-        new ZeroAlgaeFlipper(m_algaeFlipperSubsystem)
+        AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "down"),
+        AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem)
       )
     );
 
@@ -240,9 +240,9 @@ public class RobotContainer {
           new WaitCommand(0.25),
           Commands.sequence(
             // new ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-            new SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
+            AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
           ),
-          new AlgaeIntake(m_algaeWheelsSubsystem)
+          AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
         )
       )
     );
@@ -258,9 +258,9 @@ public class RobotContainer {
           new WaitCommand(0.25),
           Commands.sequence(
             // new ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-            new SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
+            AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
           ),
-          new AlgaeIntake(m_algaeWheelsSubsystem)
+          AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
         )
       )
     );
@@ -292,11 +292,11 @@ public class RobotContainer {
     );
 
     operatorX.whileTrue(
-      new LowerAlgaeFlipperManual(m_algaeFlipperSubsystem)
+      AlgaeCommands.LowerFlipperManual(m_algaeFlipperSubsystem)
     );
 
     operatorY.whileTrue(
-      new RaiseAlgaeFlipperManual(m_algaeFlipperSubsystem)
+      AlgaeCommands.RaiseFlipperManual(m_algaeFlipperSubsystem)
     );
 
     operatorLB.whileTrue(
@@ -316,11 +316,11 @@ public class RobotContainer {
     );
 
     operatorRightDPad.whileTrue(
-      new AlgaeIntake(m_algaeWheelsSubsystem)
+      AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
     );
 
     operatorLeftDPad.whileTrue(
-      new AlgaeExtake(m_algaeWheelsSubsystem)
+      AlgaeCommands.ExtakeAlgae(m_algaeWheelsSubsystem)
     );
 
     // driveA.whileTrue(
@@ -608,13 +608,13 @@ public class RobotContainer {
     );
 
     SequentialCommandGroup RaiseAlgaeFlipperCommand = new SequentialCommandGroup(
-      new ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-      new SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
+      AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
+      AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
     );
 
     SequentialCommandGroup LowerAlgaeFlipperCommand = new SequentialCommandGroup(
-      new SetAlgaeFlipper(m_algaeFlipperSubsystem, "down"),
-      new ZeroAlgaeFlipper(m_algaeFlipperSubsystem)
+      AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "down"),
+      AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem)
     );
 
     SequentialCommandGroup LowerCoralFlipperLowCommand = new SequentialCommandGroup(
@@ -677,10 +677,10 @@ public class RobotContainer {
       ),
       new WaitCommand(0.25),
       Commands.sequence(
-        new ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-        new SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
+        AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
+        AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
       ),
-      new AlgaeIntake(m_algaeWheelsSubsystem)
+      AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
     );
 
     SequentialCommandGroup IntakeAlgaeL3 = new SequentialCommandGroup(
@@ -690,10 +690,10 @@ public class RobotContainer {
       ),
       new WaitCommand(0.25),
       Commands.sequence(
-        new ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-        new SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
+        AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
+        AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
       ),
-      new AlgaeIntake(m_algaeWheelsSubsystem)
+      AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
     );
 
     ParallelCommandGroup IntakeCoral = new ParallelCommandGroup(
