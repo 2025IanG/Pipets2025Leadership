@@ -4,13 +4,24 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
+
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.Distance;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -60,6 +71,56 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 42;
 
     public static final boolean kGyroReversed = false;
+
+    public static final double kEstimationCoefficient = 0.025;
+
+    // public static final ModuleConfig moduleConfig = new ModuleConfig(
+    //   ModuleConstants.kWheelDiameterMeters / 2, 
+    //   3.95, 
+    //   0.85,
+    //   new DCMotor(
+    //     12, 
+    //     3.6, 
+    //     211, 
+    //     3.6, 
+    //     6784, 
+    //     1
+    //   ), 
+    //   ModuleConstants.kDrivingMotorReduction, 
+    //   40, 
+    //   1
+    // );
+
+    // public static final RobotConfig robotConfig = new RobotConfig(
+    //   Units.lbsToKilograms(132.75), 
+    //   20,
+    //   moduleConfig, 
+    //   new Translation2d[] {
+    //     new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+    //     new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+    //     new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+    //     new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)
+    //   }
+    // );
+
+    public static final PPHolonomicDriveController ppDriveController = new PPHolonomicDriveController(
+      new PIDConstants(10, 0.5, 0.05), 
+      new PIDConstants(10, 0.05, 0.1)
+    );
+
+    public static final PathConstraints constraints = new PathConstraints(
+      AutoConstants.kMaxSpeedMetersPerSecond, 
+      AutoConstants.kMaxAccelerationMetersPerSecondSquared, 
+      AutoConstants.kMaxAngularSpeedRadiansPerSecond, 
+      AutoConstants.kMaxAngularSpeedRadiansPerSecondSquared
+    );
+
+    // ROBOT IS 6.75 INCHES BACK FROM REEF WHEN SCORING CORAL
+    // RIGHT SIDE SCORING IS 11.5 INCHES TO THE RIGHT
+    // LEFT SIDE SHOULD BE RELATIVELY CENTERED
+    // ALGAE SHOULD BE ABLE TO JUST GO AGAINST THE REEF WHEN AUTO ALIGNED
+    // ALGAE IS ALSO CENTERED ON THE REEF
+    // CORAL "PRONGS" ARE 7.5 INCHES ON EITHER SIDE OF THE CENTER OF THE REEF
   }
 
   public static final class ModuleConstants {
@@ -81,6 +142,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
     public static final double kDriveDeadband = 0.1;
   }
 
@@ -103,10 +165,92 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 6704;
   }
 
+  public static final class ElevatorConstants {
+
+    // From bottom of elevator structure to bottom of second stage
+    // If testing doesn't work with these numbers, subtract 4.75 from all position measurements
+    public static final double minPos = 0;
+    public static final double maxPos = 4.1;
+
+    public static final double max_output = 0.7; // Must be between 0 and 1 inclusive
+    public static final double rotationsPerInch = 0.745; // Number needs testing. Factors in gearbox
+    public static final double posTolerance = 0.5; // Half an inch of tolerance
+
+    public static final double maxVelocity = 30; // Inches per second
+    public static final double maxAcceleration = 60; // Inches per second squared
+
+    // TODO: Change these numbers when we can measure the elevator on the actual robot
+    public static final Angle L2_ALGAE = edu.wpi.first.units.Units.Rotations.of(1.7);
+    public static final Angle L3_ALGAE = edu.wpi.first.units.Units.Rotations.of(3.3);
+    // L1 is min pos
+    public static final Angle L2_CORAL = edu.wpi.first.units.Units.Rotations.of(0);
+    public static final Angle L3_CORAL = edu.wpi.first.units.Units.Rotations.of(1.5);
+    public static final Angle L4_CORAL = edu.wpi.first.units.Units.Rotations.of(4.05);
+    public static final Angle CORAL_STATION = edu.wpi.first.units.Units.Rotations.of(0);
+
+    public static final Angle HOME = edu.wpi.first.units.Units.Rotations.of(0);
+    
+    public static final int primaryElevatorID = 2;
+    public static final int followerElevatorID = 1;
+    public static final int limitSwitchPort = 7;
+
+    public static final double kP = 2;
+    public static final double kI = 0.5;
+    public static final double kD = 0.2;
+
+  }
+
+  public static final class AlgaeConstants {
+
+    public static final int flipMotorID = 3;
+    public static final int rightMotorID = 4;
+    public static final int leftMotorID = 5;
+
+    public static final double kP = 15;
+    public static final double kI = 2;
+    public static final double kD = 0.2;
+
+    public static final Angle kAngleDown = edu.wpi.first.units.Units.Rotations.of(0);
+    public static final Angle kAngleUp = edu.wpi.first.units.Units.Rotations.of(-0.249);
+  
+  }
+
+  public static final class CoralConstants {
+
+    public static final int flipMotorID = 6;
+    public static final int wheelMotorID = 7;
+
+    public static final double kP = 10;
+    public static final double kI = 1;
+    public static final double kD = 0.1;
+
+    // Yes the whole import statement has to be there bc of the other units class colliding with it
+    public static final Angle kIdleAngle = edu.wpi.first.units.Units.Rotations.of(0);
+    public static final Angle kScoreLow = edu.wpi.first.units.Units.Rotations.of(0.125);
+    public static final Angle kScoreHigh = edu.wpi.first.units.Units.Rotations.of(0.15);
+    // TODO: TAKE THESE MEASUREMENTS
+    public static final Angle kCoralStation = edu.wpi.first.units.Units.Rotations.of(0);
+
+  }
+
   public static final class RobotToCamTransforms {
-    public static final Transform3d PHOTON_CAM_POSE = new Transform3d(
-      new Translation3d(0, Units.inchesToMeters(15), Units.inchesToMeters(7)), 
-      new Rotation3d(0, 0, Units.degreesToRadians(90))
+    public static final Transform3d kCam1Transform = new Transform3d(
+      new Translation3d(Units.inchesToMeters(14.75), Units.inchesToMeters(1.25), Units.inchesToMeters(12)), 
+      new Rotation3d(0, Units.degreesToRadians(20), 0)
     );
+
+    public static final Transform3d kCam2Transform = new Transform3d(
+      new Translation3d(Units.inchesToMeters(-14.75), Units.inchesToMeters(-3), Units.inchesToMeters(12)),
+      new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180))
+    );
+  }
+  
+  public static final class ClimberConstants {
+
+    public static final int climbMotorID = 8;
+
+    public static final double kP = 0.1;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 }

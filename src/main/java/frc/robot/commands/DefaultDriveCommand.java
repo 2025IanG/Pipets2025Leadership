@@ -25,11 +25,10 @@ public class DefaultDriveCommand extends Command {
 
     @Override
     public void execute() {
-
         m_drive.drive(
-            -MathUtil.applyDeadband(m_controller.getLeftY() * 0.8, OIConstants.kDriveDeadband), 
-            -MathUtil.applyDeadband(m_controller.getLeftX() * 0.8, OIConstants.kDriveDeadband), 
-            -MathUtil.applyDeadband(m_controller.getRightX() * 0.8, OIConstants.kDriveDeadband),
+            -MathUtil.applyDeadband(m_controller.getLeftY() * 0.9, OIConstants.kDriveDeadband), 
+            -MathUtil.applyDeadband(m_controller.getLeftX() * 0.9, OIConstants.kDriveDeadband), 
+            -MathUtil.applyDeadband(m_controller.getRightX() * 0.9, OIConstants.kDriveDeadband),
             true
         );
 

@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotToCamTransforms;
 
 public class VisionSubsystem extends SubsystemBase {
 
-    BulldogPhotonCamera[] cameras = {
-        new BulldogPhotonCamera("BulldogCam1", RobotToCamTransforms.PHOTON_CAM_POSE)
+    private BulldogCamera[] cams = {
+        new BulldogCamera("BulldogCam1", RobotToCamTransforms.kCam1Transform),
+        new BulldogCamera("BulldogCam2", RobotToCamTransforms.kCam2Transform)
     };
 
-    List<Pose2d> camPoses = new ArrayList<Pose2d>();
-    List<Double> camTimestamps = new ArrayList<Double>();
+    private List<Pose2d> camPoses = new ArrayList<Pose2d>();
+    private List<Double> camTimestamps = new ArrayList<Double>();
 
     public VisionSubsystem() {}
 
@@ -25,9 +25,9 @@ public class VisionSubsystem extends SubsystemBase {
         camPoses.clear();
         camTimestamps.clear();
 
-        for (int i = 0; i < cameras.length; i++) {
+        for (int i = 0; i < cams.length; i++) {
 
-            cameras[i].updateVision();
+            cams[i].updateVision();
             processCamera(i);
 
         }
@@ -36,16 +36,15 @@ public class VisionSubsystem extends SubsystemBase {
 
     public void processCamera(int camNum) {
 
-        camPoses.add(
-            new Pose2d(
-                cameras[camNum].camEstimatedX,
-                cameras[camNum].camEstimatedY,
-                new Rotation2d(cameras[camNum].camEstimatedAngle)
-            )
-        );
+        camPoses.add(cams[camNum].camPose);
+        camTimestamps.add(cams[camNum].camTimestamp);
 
-        camTimestamps.add(cameras[camNum].timestamp);
+    }
 
+    public void setReferencePose(Pose2d pose) {
+        for (BulldogCamera cam : cams) {
+            cam.setReferencePose(pose);
+        }
     }
 
     public List<Pose2d> getCameraPoses() {
@@ -55,5 +54,9 @@ public class VisionSubsystem extends SubsystemBase {
     public List<Double> getCameraTimestamps() {
         return camTimestamps;
     }
-    
+
+    public double getMinDistance(int num) {
+        return cams[num].getMinDistance();
+    }
+
 }
