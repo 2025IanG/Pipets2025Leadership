@@ -14,15 +14,9 @@ public class AlgaeCommands {
         return Commands.runOnce(
             () -> {
                 switch(pos) {
-                    case "up":
-                        flipper.setPosition(AlgaeConstants.kAngleUp);
-                        break;
-                    case "down":
-                        flipper.setPosition(AlgaeConstants.kAngleDown);
-                        break;
-                    default:
-                        flipper.setPosition(AlgaeConstants.kAngleDown);
-                        break;
+                    case "up" -> flipper.setPosition(AlgaeConstants.kAngleUp);
+                    case "down" -> flipper.setPosition(AlgaeConstants.kAngleDown);
+                    default -> flipper.setPosition(AlgaeConstants.kAngleDown);
                 }
             },
             flipper

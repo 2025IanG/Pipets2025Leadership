@@ -112,7 +112,7 @@ public class RobotContainer {
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DefaultDriveCommand(m_robotDrive, m_driverController));
     m_leds.setDefaultCommand(new DefaultLEDCommand(m_leds));
-    m_coralWheelsSubsystem.setDefaultCommand(new DefaultCoralWheelsCommand(m_coralWheelsSubsystem));
+    m_coralWheelsSubsystem.setDefaultCommand(CoralCommands.DefaultWheels(m_coralWheelsSubsystem));
 
     setUpDriverTab();
   }
@@ -141,7 +141,7 @@ public class RobotContainer {
     );
 
     driveA.whileTrue(
-      new CoralExtake(m_coralWheelsSubsystem)
+      CoralCommands.ExtakeCoral(m_coralWheelsSubsystem)
     );
 
     driveB.whileTrue(
@@ -150,8 +150,8 @@ public class RobotContainer {
 
     driveX.onTrue(
       new SequentialCommandGroup(
-        new SetCoralFlipper(m_coralFlipperSubsystem, "idle"),
-        new ZeroCoralFlipper(m_coralFlipperSubsystem)
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "idle"),
+        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem)
       )
     );
 
@@ -191,7 +191,7 @@ public class RobotContainer {
           ),
           Commands.sequence(
             // new ZeroCoralFlipper(m_coralFlipperSubsystem),
-            new SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
+           CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
           )
         )
       )
@@ -207,7 +207,7 @@ public class RobotContainer {
           ),
           Commands.sequence(
             // new ZeroCoralFlipper(m_coralFlipperSubsystem),
-            new SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
+            CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
           )
         )
       )
@@ -223,7 +223,7 @@ public class RobotContainer {
           ),
           Commands.sequence(
             // new ZeroCoralFlipper(m_coralFlipperSubsystem),
-            new SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
+            CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
           )
         )
       )
@@ -269,8 +269,8 @@ public class RobotContainer {
       new ParallelCommandGroup(
         new SlideRight(m_robotDrive),
         new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
-        new SetCoralFlipper(m_coralFlipperSubsystem, "coralStation"),
-        new CoralIntake(m_coralWheelsSubsystem)
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation"),
+        CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
       )
     );
 
@@ -278,17 +278,17 @@ public class RobotContainer {
       new ParallelCommandGroup(
         new SlideLeft(m_robotDrive),
         new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
-        new SetCoralFlipper(m_coralFlipperSubsystem, "coralStation"),
-        new CoralIntake(m_coralWheelsSubsystem)
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation"),
+        CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
       )
     );
 
     operatorA.whileTrue(
-      new LowerCoralFlipperManual(m_coralFlipperSubsystem)
+      CoralCommands.LowerFlipperManual(m_coralFlipperSubsystem)
     );
 
     operatorB.whileTrue(
-      new RaiseCoralFlipperManual(m_coralFlipperSubsystem)
+      CoralCommands.RaiseFlipperManual(m_coralFlipperSubsystem)
     );
 
     operatorX.whileTrue(
@@ -308,11 +308,11 @@ public class RobotContainer {
     );
 
     operatorUpDPad.whileTrue(
-      new CoralIntake(m_coralWheelsSubsystem)
+      CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
     );
 
     operatorDownDPad.whileTrue(
-      new CoralExtake(m_coralWheelsSubsystem)
+      CoralCommands.ExtakeCoral(m_coralWheelsSubsystem)
     );
 
     operatorRightDPad.whileTrue(
@@ -618,23 +618,23 @@ public class RobotContainer {
     );
 
     SequentialCommandGroup LowerCoralFlipperLowCommand = new SequentialCommandGroup(
-      new ZeroCoralFlipper(m_coralFlipperSubsystem),
-      new SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
+      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
     );
 
     SequentialCommandGroup LowerCoralFlipperHighCommand = new SequentialCommandGroup(
-      new ZeroCoralFlipper(m_coralFlipperSubsystem),
-      new SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
+      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
     );
 
     SequentialCommandGroup LowerCoralFlipperCoralStationCommand = new SequentialCommandGroup(
-      new ZeroCoralFlipper(m_coralFlipperSubsystem),
-      new SetCoralFlipper(m_coralFlipperSubsystem, "coralStation")
+      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation")
     );
 
     SequentialCommandGroup RaiseCoralFlipperCommand = new SequentialCommandGroup(
-      new SetCoralFlipper(m_coralFlipperSubsystem, "idle"),
-      new ZeroCoralFlipper(m_coralFlipperSubsystem)
+      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "idle"),
+      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem)
     );
 
     ParallelCommandGroup ScoreCoralL2Command = new ParallelCommandGroup(
@@ -643,8 +643,8 @@ public class RobotContainer {
         new ZeroElevator(m_elevatorSubsystem)
       ),
       Commands.sequence(
-        new ZeroCoralFlipper(m_coralFlipperSubsystem),
-        new SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
+        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
       )
     );
 
@@ -654,8 +654,8 @@ public class RobotContainer {
         new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_CORAL)
       ),
       Commands.sequence(
-        new ZeroCoralFlipper(m_coralFlipperSubsystem),
-        new SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
+        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
       )
     );
 
@@ -665,8 +665,8 @@ public class RobotContainer {
         new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL)
       ),
       Commands.sequence(
-        new ZeroCoralFlipper(m_coralFlipperSubsystem),
-        new SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
+        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
       )
     );
 
@@ -702,10 +702,10 @@ public class RobotContainer {
         new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION)
       ),
       Commands.sequence(
-        new ZeroCoralFlipper(m_coralFlipperSubsystem),
-        new SetCoralFlipper(m_coralFlipperSubsystem, "coralStation")
+        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
+        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation")
       ),
-      new CoralIntake(m_coralWheelsSubsystem)
+      CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
     );    
 
 }

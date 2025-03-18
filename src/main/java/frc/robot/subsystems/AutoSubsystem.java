@@ -33,9 +33,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer.ElevatorLevel;
-import frc.robot.commands.CoralExtake;
-import frc.robot.commands.CoralIntake;
-import frc.robot.commands.SetCoralFlipper;
+import frc.robot.commands.CoralCommands;
 import frc.robot.commands.SetElevator;
 import frc.robot.subsystems.algae.AlgaeFlipperSubsystem;
 import frc.robot.subsystems.algae.AlgaeWheelsSubsystem;
@@ -240,16 +238,16 @@ public class AutoSubsystem extends SubsystemBase {
                         // Raise elevator to L4 and Lower Coral
                         Commands.parallel(
                             new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL),
-                            new SetCoralFlipper(m_coralFlipper, "scoreHigh")
+                            CoralCommands.SetCoralFlipper(m_coralFlipper, "scoreHigh")
                         ),
                         // Give time for them to raise up b/c they technically finish instantly
                         new WaitCommand(1.25),
                         // Score the coral
-                        new CoralExtake(m_coralWheels).withTimeout(0.5),
+                        CoralCommands.ExtakeCoral(m_coralWheels).withTimeout(0.5),
                         // Bring the elevator back down and store coral
                         Commands.parallel(
                             new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
-                            new SetCoralFlipper(m_coralFlipper, "idle")
+                            CoralCommands.SetCoralFlipper(m_coralFlipper, "idle")
                         ),
                         new WaitCommand(0.5)
                     )
@@ -263,16 +261,16 @@ public class AutoSubsystem extends SubsystemBase {
                         // Raise elevator to the coral station level
                         Commands.parallel(
                             new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
-                            new SetCoralFlipper(m_coralFlipper, "coralStation")
+                            CoralCommands.SetCoralFlipper(m_coralFlipper, "coralStation")
                         ),
                         // Give it time to raise
                         new WaitCommand(0.5),
-                        // Give a lot of time to intake so the human play has time to throw the piece
-                        new CoralIntake(m_coralWheels).withTimeout(1.5),
+                        // Give a lot of time to intake so the human player has time to throw the piece
+                        CoralCommands.IntakeCoral(m_coralWheels).withTimeout(1.5),
                         // Put the elevator back so we can drive
                         Commands.parallel(
                             new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
-                            new SetCoralFlipper(m_coralFlipper, "idle")
+                            CoralCommands.SetCoralFlipper(m_coralFlipper, "idle")
                         ),
                         new WaitCommand(0.5)
                     )
