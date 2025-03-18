@@ -34,7 +34,7 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer.ElevatorLevel;
 import frc.robot.commands.CoralCommands;
-import frc.robot.commands.SetElevator;
+import frc.robot.commands.ElevatorCommands;
 import frc.robot.subsystems.algae.AlgaeFlipperSubsystem;
 import frc.robot.subsystems.algae.AlgaeWheelsSubsystem;
 import frc.robot.subsystems.coral.CoralFlipperSubsystem;
@@ -237,7 +237,7 @@ public class AutoSubsystem extends SubsystemBase {
                     Commands.sequence(
                         // Raise elevator to L4 and Lower Coral
                         Commands.parallel(
-                            new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL),
+                            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL),
                             CoralCommands.SetCoralFlipper(m_coralFlipper, "scoreHigh")
                         ),
                         // Give time for them to raise up b/c they technically finish instantly
@@ -246,7 +246,7 @@ public class AutoSubsystem extends SubsystemBase {
                         CoralCommands.ExtakeCoral(m_coralWheels).withTimeout(0.5),
                         // Bring the elevator back down and store coral
                         Commands.parallel(
-                            new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
+                            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
                             CoralCommands.SetCoralFlipper(m_coralFlipper, "idle")
                         ),
                         new WaitCommand(0.5)
@@ -260,7 +260,7 @@ public class AutoSubsystem extends SubsystemBase {
                     Commands.sequence(
                         // Raise elevator to the coral station level
                         Commands.parallel(
-                            new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
+                            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
                             CoralCommands.SetCoralFlipper(m_coralFlipper, "coralStation")
                         ),
                         // Give it time to raise
@@ -269,7 +269,7 @@ public class AutoSubsystem extends SubsystemBase {
                         CoralCommands.IntakeCoral(m_coralWheels).withTimeout(1.5),
                         // Put the elevator back so we can drive
                         Commands.parallel(
-                            new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
+                            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
                             CoralCommands.SetCoralFlipper(m_coralFlipper, "idle")
                         ),
                         new WaitCommand(0.5)

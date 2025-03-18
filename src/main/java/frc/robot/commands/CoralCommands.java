@@ -18,6 +18,7 @@ public class CoralCommands {
                     case "scoreLow" -> flipper.setPosition(CoralConstants.kScoreLow);
                     case "scoreHigh" -> flipper.setPosition(CoralConstants.kScoreHigh);
                     case "coralStation" -> flipper.setPosition(CoralConstants.kCoralStation);
+                    default -> flipper.setPosition(CoralConstants.kIdleAngle);
                 }
             }, 
             flipper

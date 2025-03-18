@@ -164,8 +164,8 @@ public class RobotContainer {
 
     driveRB.onTrue(
       new SequentialCommandGroup(
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
-        new ZeroElevator(m_elevatorSubsystem)
+        ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
+        ElevatorCommands.ZeroElevator(m_elevatorSubsystem)
       )
     );
 
@@ -187,7 +187,7 @@ public class RobotContainer {
         new ParallelCommandGroup(
           Commands.sequence(
             // new ZeroElevator(m_elevatorSubsystem),
-            new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL)
+            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL)
           ),
           Commands.sequence(
             // new ZeroCoralFlipper(m_coralFlipperSubsystem),
@@ -203,7 +203,7 @@ public class RobotContainer {
         new ParallelCommandGroup(
           Commands.sequence(
             // new ZeroElevator(m_elevatorSubsystem),
-            new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_CORAL)
+            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_CORAL)
           ),
           Commands.sequence(
             // new ZeroCoralFlipper(m_coralFlipperSubsystem),
@@ -218,8 +218,8 @@ public class RobotContainer {
         // m_robotDrive.pathFindToReefCoral(),
         new ParallelCommandGroup(
           Commands.sequence(
-            new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
-            new ZeroElevator(m_elevatorSubsystem)
+            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
+            ElevatorCommands.ZeroElevator(m_elevatorSubsystem)
           ),
           Commands.sequence(
             // new ZeroCoralFlipper(m_coralFlipperSubsystem),
@@ -235,7 +235,7 @@ public class RobotContainer {
         new SequentialCommandGroup(
           Commands.sequence(
             // new ZeroElevator(m_elevatorSubsystem),
-            new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_ALGAE)
+            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_ALGAE)
           ),
           new WaitCommand(0.25),
           Commands.sequence(
@@ -253,7 +253,7 @@ public class RobotContainer {
         new SequentialCommandGroup(
           Commands.sequence(
             // new ZeroElevator(m_elevatorSubsystem),
-            new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_2_ALGAE)
+            ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_2_ALGAE)
           ),
           new WaitCommand(0.25),
           Commands.sequence(
@@ -268,7 +268,7 @@ public class RobotContainer {
     driveRightDPad.whileTrue(
       new ParallelCommandGroup(
         new SlideRight(m_robotDrive),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
+        ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
         CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation"),
         CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
       )
@@ -277,7 +277,7 @@ public class RobotContainer {
     driveLeftDPad.whileTrue(
       new ParallelCommandGroup(
         new SlideLeft(m_robotDrive),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
+        ElevatorCommands.SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION),
         CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation"),
         CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
       )
@@ -300,11 +300,11 @@ public class RobotContainer {
     );
 
     operatorLB.whileTrue(
-      new LowerElevatorManual(m_elevatorSubsystem)
+      ElevatorCommands.LowerElevatorManual(m_elevatorSubsystem)
     );
 
     operatorRB.whileTrue(
-      new RaiseElevatorManual(m_elevatorSubsystem)
+      ElevatorCommands.RaiseElevatorManual(m_elevatorSubsystem)
     );
 
     operatorUpDPad.whileTrue(
@@ -576,136 +576,5 @@ public class RobotContainer {
       CENTER,
       RIGHT
     }
-
-    SequentialCommandGroup RaiseElevatorL3CoralCommand = new SequentialCommandGroup(
-      new ZeroElevator(m_elevatorSubsystem),
-      new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_CORAL)
-    );
-
-    SequentialCommandGroup RaiseElevatorL4CoralCommand = new SequentialCommandGroup(
-      new ZeroElevator(m_elevatorSubsystem),
-      new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL)
-    );
-
-    SequentialCommandGroup RaiseElevatorL2AlgaeCommand = new SequentialCommandGroup(
-      new ZeroElevator(m_elevatorSubsystem),
-      new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_2_ALGAE)
-    );
-
-    SequentialCommandGroup RaiseElevatorL3AlgaeCommand = new SequentialCommandGroup(
-      new ZeroElevator(m_elevatorSubsystem),
-      new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_ALGAE)
-    );
-
-    SequentialCommandGroup RaiseElevatorCoralStationCommand = new SequentialCommandGroup(
-      new ZeroElevator(m_elevatorSubsystem),
-      new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION)
-    );
-
-    SequentialCommandGroup LowerElevatorCommand = new SequentialCommandGroup(
-      new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
-      new ZeroElevator(m_elevatorSubsystem)
-    );
-
-    SequentialCommandGroup RaiseAlgaeFlipperCommand = new SequentialCommandGroup(
-      AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-      AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
-    );
-
-    SequentialCommandGroup LowerAlgaeFlipperCommand = new SequentialCommandGroup(
-      AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "down"),
-      AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem)
-    );
-
-    SequentialCommandGroup LowerCoralFlipperLowCommand = new SequentialCommandGroup(
-      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
-    );
-
-    SequentialCommandGroup LowerCoralFlipperHighCommand = new SequentialCommandGroup(
-      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
-    );
-
-    SequentialCommandGroup LowerCoralFlipperCoralStationCommand = new SequentialCommandGroup(
-      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation")
-    );
-
-    SequentialCommandGroup RaiseCoralFlipperCommand = new SequentialCommandGroup(
-      CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "idle"),
-      CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem)
-    );
-
-    ParallelCommandGroup ScoreCoralL2Command = new ParallelCommandGroup(
-      Commands.sequence(
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.HOME),
-        new ZeroElevator(m_elevatorSubsystem)
-      ),
-      Commands.sequence(
-        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
-      )
-    );
-
-    ParallelCommandGroup ScoreCoralL3Command = new ParallelCommandGroup(
-      Commands.sequence(
-        new ZeroElevator(m_elevatorSubsystem),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_CORAL)
-      ),
-      Commands.sequence(
-        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreLow")
-      )
-    );
-
-    ParallelCommandGroup ScoreCoralL4Command = new ParallelCommandGroup(
-      Commands.sequence(
-        new ZeroElevator(m_elevatorSubsystem),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_4_CORAL)
-      ),
-      Commands.sequence(
-        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "scoreHigh")
-      )
-    );
-
-    SequentialCommandGroup IntakeAlgaeL2 = new SequentialCommandGroup(
-      Commands.sequence(
-        new ZeroElevator(m_elevatorSubsystem),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_2_ALGAE)
-      ),
-      new WaitCommand(0.25),
-      Commands.sequence(
-        AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-        AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
-      ),
-      AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
-    );
-
-    SequentialCommandGroup IntakeAlgaeL3 = new SequentialCommandGroup(
-      Commands.sequence(
-        new ZeroElevator(m_elevatorSubsystem),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.LEVEL_3_ALGAE)
-      ),
-      new WaitCommand(0.25),
-      Commands.sequence(
-        AlgaeCommands.ZeroAlgaeFlipper(m_algaeFlipperSubsystem),
-        AlgaeCommands.SetAlgaeFlipper(m_algaeFlipperSubsystem, "up")
-      ),
-      AlgaeCommands.IntakeAlgae(m_algaeWheelsSubsystem)
-    );
-
-    ParallelCommandGroup IntakeCoral = new ParallelCommandGroup(
-      Commands.sequence(
-        new ZeroElevator(m_elevatorSubsystem),
-        new SetElevator(m_elevatorSubsystem, ElevatorLevel.CORAL_STATION)
-      ),
-      Commands.sequence(
-        CoralCommands.ZeroCoralFlipper(m_coralFlipperSubsystem),
-        CoralCommands.SetCoralFlipper(m_coralFlipperSubsystem, "coralStation")
-      ),
-      CoralCommands.IntakeCoral(m_coralWheelsSubsystem)
-    );    
 
 }
